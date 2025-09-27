@@ -10,11 +10,11 @@ with sync_playwright() as playwright:
     )
 
     #text = 'New Text'
-    #page.evaluate(
+    # page.evaluate(
     #    f"""
-     #   const title = document.getElementById('authentication-ui-course-title-text');
-      #  title.textContent = '{text}'
-       # """
+    #    const title = document.getElementById('authentication-ui-course-title-text');
+    #    title.textContent = '{text}'
+    #    """
     #)
 
     new_text = 'New Text'
