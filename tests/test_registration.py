@@ -1,6 +1,8 @@
 from  playwright.sync_api import sync_playwright
+import pytest
 
-
+@pytest.mark.registration
+@pytest.mark.regression
 # чтоб обернуть файл playwright в тест нам надо
 def test_successeful_registration():
     with sync_playwright() as playwright:
