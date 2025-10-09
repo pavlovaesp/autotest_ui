@@ -1,9 +1,11 @@
 from  playwright.sync_api import expect, Page
 import pytest
 
+
 @pytest.mark.regression
 @pytest.mark.authentication
-def test_wrong_email_or_password_authorization(chromium_page: Page):
+@pytest.mark.parametrize('email, password', [('user.name@gmail.com', 'password'), ('user.name@gmail.com','  '), ('  ', 'password')])
+def test_wrong_email_or_password_authorization(chromium_page: Page, email: str, password: str):
         chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login")
 
         ##//div[@data-testid="login-form-email-input"]//div/input - локатор со страницы
@@ -11,11 +13,11 @@ def test_wrong_email_or_password_authorization(chromium_page: Page):
         # используем функцию get_by_test_id и эту часть локатора значение > "login-form-email-input"
         # в случае с почтой/паролем мы указываем imput так как надо искать внутри контейнера
         email_input = chromium_page.get_by_test_id('login-form-email-input').locator('input')
-        email_input.fill('user.name@gmail@mail.ru')
+        email_input.fill(email)
 
         ##//div[@data-testid="login-form-password-input"]//div/input
         password_input = chromium_page.get_by_test_id('login-form-password-input').locator('input')
-        password_input.fill('Password')
+        password_input.fill(password)
 
         ##//button[@data-testid="login-page-login-button"]
         login_button = chromium_page.get_by_test_id('login-page-login-button')
