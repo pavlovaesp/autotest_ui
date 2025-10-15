@@ -15,7 +15,7 @@ class LoginPage(BasePage):
         # атрибуты/ локаторы стр
         self.email_input = page.get_by_test_id('login-form-email-input').locator('input')
         self.password_input = page.get_by_test_id('login-form-password-input').locator('input')
-        self.login_button = page.get_by_test_id('login-form-login-button')
+        self.login_button = page.get_by_test_id('login-page-login-button')
         self.registration_link = page.get_by_test_id('login-page-registration-link')
         self.wrong_email_or_password_alert = page.get_by_test_id('login-page-wrong-email-or-password-alert')
 
