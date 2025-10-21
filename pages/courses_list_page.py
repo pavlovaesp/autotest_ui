@@ -54,10 +54,8 @@ class CoursesListPage(BasePage):
     def check_visible_create_courses_button(self):
         expect(self.create_courses_button).to_be_visible()
 
-
     def click_create_courses_button(self):
         self.create_courses_button.click()
-
 
     def check_visible_course_card(
             self,
@@ -82,14 +80,11 @@ class CoursesListPage(BasePage):
         expect(self.course_estimated_time_text.nth(index)).to_be_visible()
         expect(self.course_estimated_time_text.nth(index)).to_have_text(f'Estimated time: {estimated_time}')
 
-
     def click_edit_course(self, index: int):
         self.course_menu_button.nth(index).click()
 
         expect(self.course_edit_menu_button.nth(index)).to_be_visible()
         expect(self.course_edit_menu_button.nth(index)).click()
-
-
 
     def click_delete_course(self, index: int):
         self.course_delete_menu_button.nth(index).click()
