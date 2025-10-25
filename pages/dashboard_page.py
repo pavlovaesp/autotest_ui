@@ -21,7 +21,7 @@ class DashboardPage(BasePage):
         self.scores_chart = page.get_by_test_id('scores-scatter-chart')
 
 
-    def check_dashboard_title(self):
+    def check_visible_dashboard_title(self):
         expect(self.dashboard_title).to_be_visible()
         expect(self.dashboard_title).to_have_text('Dashboard')
 
