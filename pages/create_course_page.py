@@ -13,28 +13,18 @@ class CreateCoursePage(BasePage):
         self.create_course_button = page.get_by_test_id('create-course-toolbar-create-course-button')
 
         # Картинка предпросмотра и блок предпросмотра картинки курса
-        # data-testid="create-course-preview-image-upload-widget-preview-image"
         self.preview_image = page.get_by_test_id('create-course-preview-image-upload-widget-preview-image')
-        #data-testid="create-course-preview-empty-view-icon"
         self.preview_empty_view_icon = page.get_by_test_id('create-course-preview-empty-view-icon')
-        #data-testid="create-course-preview-empty-view-title-text"
-        self.preview_empty_view_title = page.get_by_test_id('create-course-preview-empty-view-title_text')
-        #data-testid="create-course-preview-empty-view-description-text"
+        self.preview_empty_view_title = page.get_by_test_id('create-course-preview-empty-view-title-text')
         self.preview_empty_view_description = page.get_by_test_id('create-course-preview-empty-view-description-text')
 
         # Кнопка загрузки, удаления картинки предпросмотра курса и блок с информацией о загружаемой картинке
-        #data-testid="create-course-preview-image-upload-widget-info-icon"
-        self.preview_upload_widget_icon = page.get_by_test_id('create-course-preview-image-upload-widget-info-icon')
-        #data-testid="create-course-preview-image-upload-widget-info-title-text"
-        self.preview_upload_widget_title = page.get_by_test_id('create-course-preview-image-upload-widget-info-title-text')
-        #data-testid="create-course-preview-image-upload-widget-info-description-text"
-        self.preview_upload_widget_description = page.get_by_test_id('create-course-preview-image-upload-widget-info-description-text')
-        #data-testid="create-course-preview-image-upload-widget-upload-button"
-        self.preview_upload_widget_upload_button = page.get_by_test_id('create-course-preview-image-upload-widget-upload-button')
-        #data-testid="create-course-preview-image-upload-widget-remove-button"
+        self.preview_image_upload_icon = page.get_by_test_id('create-course-preview-image-upload-widget-info-icon')
+        self.preview_image_upload_title = page.get_by_test_id('create-course-preview-image-upload-widget-info-title-text')
+        self.preview_image_upload_description = page.get_by_test_id('create-course-preview-image-upload-widget-info-description-text')
+        self.preview_image_upload_button = page.get_by_test_id('create-course-preview-image-upload-widget-upload-button')
         self.preview_image_remove_button = page.get_by_test_id('create-course-preview-image-upload-widget-remove-button')
-        #data-testid="create-course-preview-image-upload-widget-upload-button"
-        self.preview_image_upload_input = page.get_by_test_id('create-course-preview-image-upload-widget-upload-button')
+        self.preview_image_upload_input = page.get_by_test_id('create-course-preview-image-upload-widget-input')
 
         # Форма создания курса
 #.locator('input') используем так как input нам нужен, а он внутри div
@@ -94,22 +84,22 @@ class CreateCoursePage(BasePage):
             'Preview of selected image will be displayed here'
         )
     #is_image_uploaded добавляется потому что у нас два состояния, картинка загружена и
-    # не загружена, bool = False означает, что не загружена картинка, если ставим try,
+    # не загружена, bool = False означает, что не загружена картинка, если ставим true,
     # то идет проверка через if is_image_uploaded
     def check_visible_image_upload_view(self, is_image_uploaded: bool = False):
-        expect(self.preview_upload_widget_icon).to_be_visible()
+        expect(self.preview_image_upload_icon).to_be_visible()
 
-        expect(self.preview_upload_widget_title).to_be_visible()
-        expect(self.preview_upload_widget_title).to_have_text(
+        expect(self.preview_image_upload_title).to_be_visible()
+        expect(self.preview_image_upload_title).to_have_text(
             'Tap on "Upload image" button to select file'
         )
 
-        expect(self.preview_upload_widget_description).to_be_visible()
-        expect(self.preview_upload_widget_description).to_have_text(
+        expect(self.preview_image_upload_description).to_be_visible()
+        expect(self.preview_image_upload_description).to_have_text(
             'Recommended file size 540X300'
         )
 
-        expect(self.preview_upload_widget_upload_button).to_be_visible()
+        expect(self.preview_image_upload_button).to_be_visible()
 
         if is_image_uploaded:
             expect(self.preview_image_remove_button).to_be_visible()
@@ -121,7 +111,7 @@ class CreateCoursePage(BasePage):
         expect(self.preview_image).to_be_visible()
 
     # данный импут помогает загрузить файл на страницу
-    def upload_preview_image(self, file: str):
+    def upload_preview_image(self, file: str = "./testdata/files/image.png"):
         self.preview_image_upload_input.set_input_files(file)
 
     def check_visible_create_course_form(

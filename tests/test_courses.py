@@ -1,25 +1,43 @@
 import pytest
-from playwright.sync_api import sync_playwright, expect, Page
 
-@pytest.mark.courses
+from pages.courses_list_page import CoursesListPage
+from pages.create_course_page import CreateCoursePage
+
 @pytest.mark.regression
-def test_empty_courses_list(chromium_page_with_state, chromium_page: Page):
-        chromium_page_with_state.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
+@pytest.mark.course
+def test_create_course(courses_list_page: CoursesListPage, create_courses_page: CreateCoursePage):
 
-        # data-testid="courses-list-toolbar-title-text"
-        courses_list_toolbar = chromium_page_with_state.get_by_test_id('courses-list-toolbar-title-text')
-        expect(courses_list_toolbar).to_be_visible()
+    create_courses_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create")
+    create_courses_page.check_visible_create_course_title()
+    create_courses_page.check_disabled_create_course_button()
+    create_courses_page.check_visible_image_preview_empty_view()
+    create_courses_page.check_visible_image_upload_view()
+    create_courses_page.check_visible_create_course_form(
+        title= "",
+        estimated_time= "",
+        description= "",
+        max_score= "0",
+        min_score= "0"
+    )
+    create_courses_page.check_visible_exercises_title()
+    create_courses_page.check_visible_create_exercise_button()
+    create_courses_page.check_visible_exercises_empty_view()
+    create_courses_page.check_visible_image_upload_view()
+    create_courses_page.upload_preview_image()
+    create_courses_page.fill_create_course_form(
+        title="Playwright2",
+        estimated_time="2 weeks",
+        description="Playwright1",
+        max_score="100",
+        min_score="10"
+    )
 
-        # data-testid="courses-list-empty-view-icon"
-        view_icon = chromium_page_with_state.get_by_test_id('courses-list-empty-view-icon')
-        expect(view_icon).to_be_visible()
+    create_courses_page.click_create_course_button()
 
-        # data-testid="courses-list-empty-view-title-text"
-        title_text = chromium_page_with_state.get_by_test_id('courses-list-empty-view-title-text')
-        expect(title_text).to_be_visible()
+    courses_list_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
+    courses_list_page.check_visible_courses_title()
+    courses_list_page.check_visible_create_courses_button()
+    courses_list_page.check_visible_course_card(
+        index=0,
+    )
 
-        # data-testid="courses-list-empty-view-description-text"
-        description_text = chromium_page_with_state.get_by_test_id('courses-list-empty-view-description-text')
-        expect(description_text).to_be_visible()
-
-        chromium_page_with_state.wait_for_timeout(3000)

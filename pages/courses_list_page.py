@@ -3,37 +3,31 @@ from pages.base_page import BasePage
 from playwright.sync_api import Page, expect
 
 class CoursesListPage(BasePage):
-    def __subclasshook__(self, page: Page):
+    def __init__(self, page: Page):
         super().__init__(page)
 
+        # Заголовок и кнопка создания курса
         #data-testid="courses-list-toolbar-title-text"
         self.courses_title = page.get_by_test_id('courses-list-toolbar-title-text')
         #data-testid="courses-list-toolbar-create-course-button"
         self.create_courses_button = page.get_by_test_id('courses-list-toolbar-create-course-button')
-        #data-testid="courses-list-empty-view-icon"
-        self.empty_view_icon = page.get_by_test_id('courses-list-empty-view-icon')
-        #data-testid="courses-list-empty-view-title-text"
-        self.empty_view_title = page.get_by_test_id('courses-list-empty-view-title-text')
-        #data-testid="courses-list-empty-view-description-text"
-        self.empty_view_description = page.get_by_test_id('courses-list-empty-view-description-text')
 
-        #data-testid="course-widget-title-text"
+        # Карточка курса
         self.course_title = page.get_by_test_id('course-widget-title-text')
-        #data-testid="course-preview-image"
         self.course_image = page.get_by_test_id('course-preview-image')
-        #data-testid="course-max-score-info-row-view-icon"
-        self.course_max_text = page.get_by_test_id('course-max-score-info-row-view-icon')
-        #data - testid = "course-min-score-info-row-view-text"
-        self.course_min_text = page.get_by_test_id('course-min-score-info-row-view-text')
-        #data-testid="course-estimated-time-info-row-view-icon"
-        self.course_estimated_time_text = page.get_by_test_id('course-estimated-time-info-row-view-icon')
+        self.course_max_score_text = page.get_by_test_id('course-max-score-info-row-view-text')
+        self.course_min_score_text = page.get_by_test_id('course-min-score-info-row-view-text')
+        self.course_estimated_time_text = page.get_by_test_id('course-estimated-time-info-row-view-text')
 
-        # data-testid="course-view-menu-button"
+        # Меню курса
         self.course_menu_button = page.get_by_test_id('course-view-menu-button')
-        #data-testid="course-view-edit-menu-item"
-        self.course_edit_menu_button = page.get_by_test_id('course-view-edit-menu-item')
-        #data-testid="course-view-delete-menu-item"
-        self.course_delete_menu_button = page.get_by_test_id('course-view-delete-menu-item')
+        self.course_edit_menu_item = page.get_by_test_id('course-view-edit-menu-item')
+        self.course_delete_menu_item = page.get_by_test_id('course-view-delete-menu-item')
+
+        # Пустой блок при отсутствии курсов
+        self.empty_view_icon = page.get_by_test_id('courses-list-empty-view-icon')
+        self.empty_view_title = page.get_by_test_id('courses-list-empty-view-title-text')
+        self.empty_view_description = page.get_by_test_id('courses-list-empty-view-description-text')
 
 
     def check_visible_courses_title(self):
@@ -59,11 +53,11 @@ class CoursesListPage(BasePage):
 
     def check_visible_course_card(
             self,
-            index: int,
-            title: str,
-            max_score: str,
-            min_score: str,
-            estimated_time: str
+            index: int = 0,
+            title: str = "Playwright2",
+            max_score: str = "100",
+            min_score: str = "10",
+            estimated_time: str = "2 weeks"
     ):
         # индекс дает возможность работать с конкретным курсом, если он на стр не один
         expect(self.course_image.nth(index)).to_be_visible()
@@ -71,11 +65,11 @@ class CoursesListPage(BasePage):
         expect(self.course_title.nth(index)).to_be_visible()
         expect(self.course_title.nth(index)).to_have_text(title)
 
-        expect(self.course_max_text.nth(index)).to_be_visible()
-        expect(self.course_max_text.nth(index)).to_have_text(f'Max score: {max_score}')
+        expect(self.course_max_score_text.nth(index)).to_be_visible()
+        expect(self.course_max_score_text.nth(index)).to_have_text(f'Max score: {max_score}')
 
-        expect(self.course_min_text.nth(index)).to_be_visible()
-        expect(self.course_min_text.nth(index)).to_have_text(f'Min score: {min_score}')
+        expect(self.course_min_score_text.nth(index)).to_be_visible()
+        expect(self.course_min_score_text.nth(index)).to_have_text(f'Min score: {min_score}')
 
         expect(self.course_estimated_time_text.nth(index)).to_be_visible()
         expect(self.course_estimated_time_text.nth(index)).to_have_text(f'Estimated time: {estimated_time}')
@@ -83,14 +77,14 @@ class CoursesListPage(BasePage):
     def click_edit_course(self, index: int):
         self.course_menu_button.nth(index).click()
 
-        expect(self.course_edit_menu_button.nth(index)).to_be_visible()
-        expect(self.course_edit_menu_button.nth(index)).click()
+        expect(self.course_menu_button.nth(index)).to_be_visible()
+        expect(self.course_menu_button.nth(index)).click()
 
     def click_delete_course(self, index: int):
-        self.course_delete_menu_button.nth(index).click()
+        self.course_delete_menu_item.nth(index).click()
 
-        expect(self.course_delete_menu_button.nth(index)).to_be_visible()
-        expect(self.course_delete_menu_button.nth(index)).click()
+        expect(self.course_delete_menu_item.nth(index)).to_be_visible()
+        expect(self.course_delete_menu_item.nth(index)).click()
 
 
 
