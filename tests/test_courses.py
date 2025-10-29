@@ -11,7 +11,9 @@ def test_create_course(courses_list_page: CoursesListPage, create_courses_page: 
     create_courses_page.check_visible_create_course_title()
     create_courses_page.check_disabled_create_course_button()
     create_courses_page.check_visible_image_preview_empty_view()
-    create_courses_page.check_visible_image_upload_view()
+    # create_courses_page.check_visible_image_upload_view()
+
+    create_courses_page.check_visible_image_upload_view(is_image_uploaded=False)
     create_courses_page.check_visible_create_course_form(
         title= "",
         estimated_time= "",
@@ -34,10 +36,14 @@ def test_create_course(courses_list_page: CoursesListPage, create_courses_page: 
 
     create_courses_page.click_create_course_button()
 
-    courses_list_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
+    #courses_list_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
     courses_list_page.check_visible_courses_title()
     courses_list_page.check_visible_create_courses_button()
     courses_list_page.check_visible_course_card(
         index=0,
+        title="Playwright2",
+        max_score="100",
+        min_score="10",
+        estimated_time="2 weeks"
     )
 
