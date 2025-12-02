@@ -1,5 +1,6 @@
 from  playwright.sync_api import Page
 
+from courses.course_view_component import CourseViewComponent
 from navigation.navbar_component import NavbarComponent
 from pages.base_page import BasePage
 from playwright.sync_api import Page, expect
@@ -14,6 +15,7 @@ class CreateCoursePage(BasePage):
         self.navbar = NavbarComponent(page)
         self.preview_empty_view = EmptyViewComponent(page, identifier='create-course-preview')
         self.exercises_empty_view = EmptyViewComponent(page, identifier='create-course-exercises')
+        self.course_view = CourseViewComponent(page)
 
         # Заголовок и кнопка создания курса
         self.create_course_title = page.get_by_test_id('create-course-toolbar-title-text')
@@ -45,17 +47,14 @@ class CreateCoursePage(BasePage):
         self.create_course_min_score_input = page.get_by_test_id('create-course-form-min-score-input').locator('input')
 
         # Заголовок и кнопка создания задания
-        # self.exercises_title = page.get_by_test_id('create-course-exercises-box-toolbar-title-text')
-        # self.create_exercise_button = page.get_by_test_id('create-course-exercises-box-toolbar-create-exercise-button')
+        self.exercises_title = page.get_by_test_id('create-course-exercises-box-toolbar-title-text')
+        self.create_exercise_button = page.get_by_test_id('create-course-exercises-box-toolbar-create-exercise-button')
 
         # Блок, который отображется, когда в курсе нет заданий
         self.exercises_empty_view_icon = page.get_by_test_id('create-course-exercises-empty-view-icon')
         self.exercises_empty_view_title = page.get_by_test_id('create-course-exercises-empty-view-title-text')
         self.exercises_empty_view_description = page.get_by_test_id('create-course-exercises-empty-view-description-text')
 
-# тут появляются индексы в идентификаторах, это динамические индексы, до этого были статические у нас
-        #data-testid="create-course-exercise-0-box-toolbar-subtitle-text"
-        #data-testid="create-course-exercise-0-box-toolbar-delete-exercise-button"
 
     def check_visible_create_course_title(self):
         expect(self.create_course_title).to_be_visible()
@@ -73,7 +72,7 @@ class CreateCoursePage(BasePage):
     def check_visible_image_preview_empty_view(self):
         self.preview_empty_view.check_visible(
             title='No image selected',
-            description='Preview of selected image will be displayed her'
+            description='Preview of selected image will be displayed here'
         )
         # expect(self.preview_empty_view_icon).to_be_visible()
         #
