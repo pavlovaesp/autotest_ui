@@ -1,0 +1,2 @@
+from .course_view_component import CourseViewComponent
+from .course_view_menu_component import CourseViewMenuComponent

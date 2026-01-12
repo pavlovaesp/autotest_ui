@@ -20,4 +20,3 @@ class NavbarComponent(BaseComponent):
 
         expect(self.welcome_title).to_be_visible()
         expect(self.welcome_title).to_have_text(f'Welcome, {username}!')
-

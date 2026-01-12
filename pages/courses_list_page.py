@@ -1,12 +1,12 @@
-from  playwright.sync_api import Page
+from components.courses.course_view_component import CourseViewComponent
+from components.navigation.navbar_component import NavbarComponent
+from components.navigation.sidebar_component import SidebarComponent
+from components.navigation.sidebar_list_item_component import SidebarListItemComponent
 
-from courses.course_view_component import CourseViewComponent
-from navigation.navbar_component import NavbarComponent
-from navigation.sidebar_component import SidebarComponent
 from pages.base_page import BasePage
 from playwright.sync_api import Page, expect
 
-from views.empty_view_component import EmptyViewComponent
+from components.views.empty_view_component import EmptyViewComponent
 
 
 class CoursesListPage(BasePage):
@@ -106,18 +106,3 @@ class CoursesListPage(BasePage):
     #
     #     expect(self.course_delete_menu_item.nth(index)).to_be_visible()
     #     expect(self.course_delete_menu_item.nth(index)).click()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

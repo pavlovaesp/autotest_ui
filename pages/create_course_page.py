@@ -1,11 +1,9 @@
-from  playwright.sync_api import Page
-
-from courses.course_view_component import CourseViewComponent
-from navigation.navbar_component import NavbarComponent
+from components.courses.course_view_component import CourseViewComponent
+from components.navigation import NavbarComponent
 from pages.base_page import BasePage
 from playwright.sync_api import Page, expect
 
-from views.empty_view_component import EmptyViewComponent
+from components.views.empty_view_component import EmptyViewComponent
 
 
 class CreateCoursePage(BasePage):
@@ -13,6 +11,7 @@ class CreateCoursePage(BasePage):
         super().__init__(page)
 
         self.navbar = NavbarComponent(page)
+
         self.preview_empty_view = EmptyViewComponent(page, identifier='create-course-preview')
         self.exercises_empty_view = EmptyViewComponent(page, identifier='create-course-exercises')
         self.course_view = CourseViewComponent(page)

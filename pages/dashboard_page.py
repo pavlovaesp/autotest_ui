@@ -1,6 +1,5 @@
-from fixtures.browsers import initialize_browser_state
-from navigation.navbar_component import NavbarComponent
-from navigation.sidebar_component import SidebarComponent
+from components.navigation import NavbarComponent
+from components.navigation import SidebarComponent
 from pages.base_page import BasePage
 from playwright.sync_api import Page, expect
 
