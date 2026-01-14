@@ -13,11 +13,11 @@ class LoginFormComponent(BaseComponent):
         self.registration_link = page.get_by_test_id('login-page-registration-link')
         self.wrong_email_or_password_alert = page.get_by_test_id('login-page-wrong-email-or-password-alert')
 
-        # реализация самого метода заполнения формы
-        # название метода формируется так:
-        # 1. действие(нажать, проверить)
-        # 2. контекст(с чем работаем логин/регистрация/ какая форма)
-        # 3. элемент тайп - с чем конкретно - кнопка / поле и т.д.
+    def check_visible(self):
+        expect(self.email_input).to_be_visible()
+        expect(self.password_input).to_be_visible()
+        expect(self.login_button).to_be_visible()
+        expect(self.registration_link).to_be_visible()
 
     def fill_login_form(self, email: str, password: str):
         self.email_input.fill(email)
