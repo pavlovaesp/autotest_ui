@@ -1,5 +1,6 @@
 import pytest
 
+from pages import create_course_page
 from pages.courses_list_page import CoursesListPage
 from pages.create_course_page import CreateCoursePage
 
@@ -11,10 +12,8 @@ def test_create_course(courses_list_page: CoursesListPage, create_courses_page: 
     create_courses_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create")
     create_courses_page.check_visible_create_course_title()
     create_courses_page.check_disabled_create_course_button()
-    create_courses_page.check_visible_image_preview_empty_view()
-    # create_courses_page.check_visible_image_upload_view()
+    create_courses_page.image_upload_widget.check_visible(is_image_uploaded=False)
 
-    create_courses_page.check_visible_image_upload_view(is_image_uploaded=False)
     create_courses_page.check_visible_create_course_form(
         title= "",
         estimated_time= "",
@@ -25,8 +24,9 @@ def test_create_course(courses_list_page: CoursesListPage, create_courses_page: 
     create_courses_page.check_visible_exercises_title()
     create_courses_page.check_visible_create_exercise_button()
     create_courses_page.check_visible_exercises_empty_view()
-    create_courses_page.check_visible_image_upload_view()
-    create_courses_page.upload_preview_image()
+    create_courses_page.image_upload_widget.upload_preview_image('./testdata/files/image.png')
+    create_courses_page.image_upload_widget.check_visible(is_image_uploaded=True)
+
     create_courses_page.fill_create_course_form(
         title="Playwright",
         estimated_time="2 weeks",
