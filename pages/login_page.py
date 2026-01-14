@@ -41,7 +41,6 @@ class LoginPage(BasePage):
     # def click_login_button(self):
     #     self.login_button.click()
     #
-    #
     # def click_registration_link(self):
     #     self.registration_link.click()
     #
